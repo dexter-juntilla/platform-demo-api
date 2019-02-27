@@ -1,6 +1,4 @@
-# Firebase Functions API Platform
-
-jump start your firebase functions project
+# Factly
 
 ## Getting Started
 
@@ -18,15 +16,6 @@ A step by step series of examples that tell you how to get a development env run
 
 - clone repo
 - `npm install`
-- `firebase login`
-- `firebase init`
-- pick Functions and other needed features by pressing space
-- press enter
-- choose your project
-- choose JavaScript
-- Do you want to use ESLint to catch probable bugs and enforce style? (y/N) y
-- Do you want to install dependencies with npm now? (Y/n) y
-- install firebase-\* modules to ./package.json; see generated ./function/package.json for specific version to install
 
 ### run locally using nodemon
 

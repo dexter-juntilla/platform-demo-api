@@ -1,1 +1,5 @@
-{}
+{
+  "projects": {
+    "default": "platform-demo-9e004"
+  }
+}
