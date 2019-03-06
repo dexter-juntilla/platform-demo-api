@@ -1,5 +1,17 @@
 import cars from './cars';
 
+export const createCar = (admin: Object) => (req: Object, res: Object) => {
+  try {
+    const db = admin.firestore();
+
+    db.collection('cars').add({});
+
+    res.status(200).json({ message: 'ok' });
+  } catch (err) {
+    res.status(500).send(err);
+  }
+};
+
 export const fetchCars = (req: Object, res: Object, next: Function) => {
   let final = [...cars];
   const { query } = req;
