@@ -1,3 +1,5 @@
+import { buildFireStoreQuery } from '../../util/common';
+
 export const createCar = (admin: Object) => (req: Object, res: Object) => {
   try {
     const db = admin.firestore();
@@ -13,50 +15,12 @@ export const createCar = (admin: Object) => (req: Object, res: Object) => {
 
 export const fetchCars = (admin: Object) => (req: Object, res: Object) => {
   try {
-    const getNextCharacterAlphabetically = str =>
-      str.substring(0, str.length - 1) +
-      String.fromCharCode(str.charCodeAt(str.length - 1) + 1);
-
     const db = admin.firestore();
     const { query } = req;
 
     let carsQuery = db.collection('cars');
 
-    if (query) {
-      const filterKeys = Object.keys(query)
-        .filter(key => key.toLowerCase().indexOf('_like') > -1)
-        .map(key => key.substr(0, key.length - '_like'.length));
-
-      if (query._sort) {
-        if (query._order && query._order === 'desc') {
-          carsQuery = carsQuery.orderBy(query._sort, 'desc');
-        } else {
-          carsQuery = carsQuery.orderBy(query._sort);
-        }
-      }
-
-      if (filterKeys.length > 0) {
-        filterKeys.forEach(field => {
-          const key = `${field}_like`;
-          carsQuery = carsQuery.where(field, '>=', query[key]);
-          carsQuery = carsQuery.where(
-            field,
-            '<',
-            getNextCharacterAlphabetically(query[key]),
-          );
-        });
-      }
-
-      if (query._page) {
-        let limit = 5;
-
-        if (query._limit) {
-          limit = parseInt(query._limit, 10);
-        }
-
-        carsQuery = carsQuery.limit(limit).offset(query._page * limit);
-      }
-    }
+    carsQuery = buildFireStoreQuery(query, carsQuery);
 
     carsQuery
       .get()
