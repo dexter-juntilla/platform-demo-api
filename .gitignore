@@ -5,8 +5,8 @@ dist/
 coverage/
 firebase-debug.log
 functions/
-config/serviceAccountKey.json
-config/firebaseCredentials.json
+src/config/serviceAccountKey.json
+src/config/firebaseCredentials.json
 
 # ignore all subs except public/static/
 !public/
