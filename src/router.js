@@ -1,5 +1,5 @@
-import cars from './demo/demo.routes';
+import cars from './api/demo/demo.routes';
 
-export default (server: Function, firebase: Object, admin: Object) => {
-  cars(server, firebase, admin);
+export default (server: Function, admin: Object) => {
+  cars(server, admin);
 };

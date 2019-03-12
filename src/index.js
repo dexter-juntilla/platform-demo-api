@@ -4,17 +4,13 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import firebase from 'firebase';
 import admin from 'firebase-admin';
 import routes from './router';
-
-import serviceAccount from '../config/serviceAccountKey.json';
-import firebaseCredentials from '../config/firebaseCredentials.json';
+import logger from './middleWare/logger';
+import serviceAccount from './config/serviceAccountKey.json';
 
 const app = express();
 const port = 8083;
-
-firebase.initializeApp(firebaseCredentials);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -33,7 +29,9 @@ app.use(cookieParser());
 // cross origin resource sharing
 app.use(cors());
 
-routes(app, firebase, admin);
+app.use(logger);
+
+routes(app, admin);
 
 if (process.env.NODE_ENV === 'development') {
   app.listen(port, () => {
